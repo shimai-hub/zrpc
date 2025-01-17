@@ -3,8 +3,10 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include "nty_coroutine.h"
+#include "zrpc.h"
 
 #define MAX_BUFFER_LENGTH   1024
+
 
 void zrpc_handle(void* arg){
     
@@ -13,20 +15,36 @@ void zrpc_handle(void* arg){
 
     while(1){
 
-        char buffer[MAX_BUFFER_LENGTH] = {0};
-        int ret = recv(remotefd, buffer, MAX_BUFFER_LENGTH, 0);
-        if(ret > 0){
-            printf("recv: %s\n",buffer + 8);
+        char rpc_header[ZRPC_MESSAGE_HEADER_LENGTH] = {0};
+        int ret = recv(remotefd, rpc_header, ZRPC_MESSAGE_HEADER_LENGTH, 0);
 
+        if(ret == ZRPC_MESSAGE_HEADER_LENGTH){
+
+            size_t length = *(unsigned short*)(rpc_header + 2);
+
+            char payload[MAX_BUFFER_LENGTH] = {0};
+            recv(remotefd, payload, length, 0);
+            char* char_response = zrpc_server_session(payload);
+            
+            memset(rpc_header, 0 ,ZRPC_MESSAGE_HEADER_LENGTH);
+            zrpc_header_encode(rpc_header, char_response);
+
+            send(remotefd, rpc_header, ZRPC_MESSAGE_HEADER_LENGTH, 0);      
+            send(remotefd, char_response, strlen(char_response), 0);
+
+            close(remotefd);
+            
         }else if(ret == 0){
             close(remotefd);
             break;
         }else if(ret < 0){
             close(remotefd);
             break;
+        }else{
+            printf("rpc header error\n");
+            close(remotefd);
+            break;
         }
-
-        ret = send(remotefd, buffer, strlen(buffer), 0);
 
     }
 

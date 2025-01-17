@@ -16,11 +16,15 @@ static unsigned int crc32_table[ZRPC_CRC32_TABLE_LENGTH] = {0};
 
 
 int zrpc_connect_server(char* ip,unsigned short port);
-void rpc_session(char* body);
 
+char* zrpc_header_encode(char* rpc_header, char* body);
 
+char* zrpc_client_session(char* body);
 
+char* zrpc_server_session(char* payload);
 
+int zrpc_method_add(int a, int b);
+char* zrpc_method_zcat(char* a, char* b, char* c);
 
 #endif
 

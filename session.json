@@ -1,0 +1,29 @@
+
+
+[
+    {
+        "method": "add",
+        "params": {
+            "a": 3,
+            "b": 4
+        },
+        "callerid": 12345678
+    },
+
+    {
+        "method": "add",
+        "result": 7,
+        "callerid": 12345678
+    },
+
+    {
+        "method": "zcat",
+        "params": {
+            "a": "abc",
+            "b": "rpq",
+            "c": "xyz"
+        },
+        "callerid": 12345679
+    }
+
+]

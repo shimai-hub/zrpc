@@ -1,0 +1,29 @@
+
+
+{
+    "namespace": "zrpc",
+    "serverip": "192.168.236.145",
+    "port": 9096,
+    "config":[
+        {
+            "method": "add",
+            "params": ["a","b"],
+            "type": ["int","int"],
+            "rettype": "int"
+        },
+
+        {
+            "method": "zcat",
+            "params": ["a","b","c"],
+            "type": ["char*","char*","char*"],
+            "rettype": "char*"
+        },
+
+        {
+            "method": "sayhello",
+            "params": ["msg","length"],
+            "type": ["char*","int"],
+            "rettype": "char*"
+        }
+    ]
+}
