@@ -23,8 +23,13 @@ char* zrpc_client_session(char* body);
 
 char* zrpc_server_session(char* payload);
 
+char* read_conf(char* filename);
+
 int zrpc_method_add(int a, int b);
 char* zrpc_method_zcat(char* a, char* b, char* c);
+char* zrpc_method_sayhello(char* msg, int length);
+
+
 
 #endif
 

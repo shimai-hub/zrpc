@@ -24,6 +24,12 @@
             "c": "xyz"
         },
         "callerid": 12345679
+    },
+
+    {
+        "method": "zcat",
+        "result": "abcrpqxyz",
+        "callerid": 12345679
     }
 
 ]
